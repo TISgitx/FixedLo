@@ -24,8 +24,8 @@ bool evaluateCondition(const std::unordered_map<std::string, Variable>& vars,
     if (left.type != right.type) return false;
 
     if (left.type == "int") {
-        int l = std::stoi(left.value);
-        int r = std::stoi(right.value);
+        long long l = safeStoll(left.value);
+        long long r = safeStoll(right.value);
         if (op == ">>") return l > r;
         if (op == "<<") return l < r;
         if (op == "===") return l == r;
@@ -38,15 +38,23 @@ bool evaluateCondition(const std::unordered_map<std::string, Variable>& vars,
     return false;
 }
 
+long long safeStoll(const std::string& s) {
+    try {
+        return std::stoll(s);
+    } catch (...) {
+        throw std::runtime_error("Invalid integer: " + s);
+    }
+}
+
 std::string evalExpression(const std::string& expr) {
     std::smatch match;
     std::regex mathRegex(R"(^(\d+)\s*([\+\-\*/%\^])\s*(\d+)$)");
     if (std::regex_match(expr, match, mathRegex)) {
-        int left = std::stoi(match[1]);
+        long long left = safeStoll(match[1]);
         char op = match[2].str()[0];
-        int right = std::stoi(match[3]);
+        long long right = safeStoll(match[3]);
 
-        int result = 0;
+        long long result = 0;
         switch (op) {
             case '+': result = left + right; break;
             case '-': result = left - right; break;

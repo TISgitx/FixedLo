@@ -11,4 +11,6 @@ bool evaluateCondition(const std::unordered_map<std::string, Variable>& vars,
                       const std::string& rhsRaw);
 std::string evalExpression(const std::string& expr);
 
+long long safeStoll(const std::string& s);
+
 #endif

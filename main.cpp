@@ -76,7 +76,7 @@ void processInput(Context &ctx, const std::smatch &m, int lineno) {
     std::string input;
     std::getline(std::cin, input);
     if (type == "i") {
-        try { std::stoi(input); ctx.variables[name] = {"int", input}; }
+        try { std::stoll(input); ctx.variables[name] = {"int", input}; }
         catch (...) { errorAndExit(lineno, "Invalid input for int: " + input); }
     } else ctx.variables[name] = {"str", input};
 }
